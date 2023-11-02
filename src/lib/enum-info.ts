@@ -20,5 +20,5 @@ export function enumInfo(enumObject: Record<string, string | number>) {
       ? ('numeric' as const)
       : ('mixed' as const);
 
-  return { values, type };
+  return { values, type, keys: keysExceptReverseMappings };
 }

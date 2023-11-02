@@ -11,7 +11,7 @@ import type {
   DiscriminatorObject as DiscriminatorObject30,
   SchemaObject as SchemaObject30,
   BaseParameterObject as BaseParameterObject30,
-  HeadersObject as HeadersObject30,
+  HeadersObject as HeadersObject30, IExtensionName,
 } from 'openapi3-ts/oas30';
 import type {
   ReferenceObject as ReferenceObject31,
@@ -872,7 +872,7 @@ export class OpenAPIGenerator {
     }
 
     if (isZodType(zodSchema, 'ZodNativeEnum')) {
-      const { type, values } = enumInfo(zodSchema._def.values);
+      const { type, values, keys } = enumInfo(zodSchema._def.values);
 
       if (type === 'mixed') {
         // enum Test {
@@ -888,6 +888,7 @@ export class OpenAPIGenerator {
         );
       }
 
+      const name: IExtensionName = 'x-enum-varnames';
       return {
         ...this.mapNullableType(
           type === 'numeric' ? 'integer' : 'string',
@@ -895,6 +896,7 @@ export class OpenAPIGenerator {
         ),
         enum: values,
         default: defaultValue,
+        [name]: keys,
       };
     }
 
